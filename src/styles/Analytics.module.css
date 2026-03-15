@@ -1,0 +1,128 @@
+.analytics-page {
+  min-height: 100vh;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.analytics-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  animation: fadeIn 0.5s ease;
+}
+
+.analytics-header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Audit Image Section */
+.audit-section {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  animation: slideUp 0.5s ease;
+  text-align: center;
+}
+
+.audit-section img {
+  max-width: 480px;
+  width: 100%;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  margin-top: 1rem;
+}
+
+.no-audit {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  padding: 2rem;
+}
+
+/* SVG Chart Section */
+.chart-section {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  animation: slideUp 0.5s ease 0.1s backwards;
+}
+
+.chart-container {
+  width: 100%;
+  overflow-x: auto;
+  padding: 1rem 0;
+}
+
+.chart-container svg {
+  display: block;
+  margin: 0 auto;
+}
+
+/* Map Section */
+.map-section {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  animation: slideUp 0.5s ease 0.2s backwards;
+}
+
+.map-wrapper {
+  height: 450px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-top: 1rem;
+}
+
+.section-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+.section-subtitle {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+/* Tooltip */
+.chart-tooltip {
+  position: absolute;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.75rem;
+  color: var(--text-primary);
+  pointer-events: none;
+  z-index: 100;
+  box-shadow: var(--shadow-md);
+  white-space: nowrap;
+}
+
+.back-btn {
+  padding: 0.5rem 1rem;
+  background: var(--bg-glass);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  transition: var(--transition-base);
+}
+
+.back-btn:hover {
+  background: var(--bg-glass-hover);
+  color: var(--text-primary);
+}
