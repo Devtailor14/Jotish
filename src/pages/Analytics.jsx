@@ -15,8 +15,8 @@ export default function Analytics() {
   const cityData = useMemo(() => {
     const map = {};
     employees.forEach((emp) => {
-      const city = emp.city || emp.City || 'Unknown';
-      const salary = parseFloat(emp.salary || emp.Salary || emp.employee_salary || 0);
+      const city = emp.city || 'Unknown';
+      const salary = emp.salary || 0;
       if (!map[city]) map[city] = { total: 0, count: 0 };
       map[city].total += salary;
       map[city].count += 1;
@@ -211,8 +211,8 @@ export default function Analytics() {
 
         <div className={styles['map-wrapper']}>
           <MapContainer
-            center={[20.5937, 78.9629]}
-            zoom={5}
+            center={[30, 10]}
+            zoom={2}
             style={{ height: '100%', width: '100%', borderRadius: 'var(--radius-md)' }}
             scrollWheelZoom={true}
           >

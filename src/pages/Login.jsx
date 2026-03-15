@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import styles from '../styles/Login.module.css';
 
@@ -13,8 +13,7 @@ export default function Login() {
 
   // If already logged in, redirect
   if (isAuthenticated) {
-    navigate('/list', { replace: true });
-    return null;
+    return <Navigate to="/list" replace />;
   }
 
   const handleSubmit = async (e) => {

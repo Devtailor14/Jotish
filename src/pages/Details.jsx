@@ -88,10 +88,6 @@ export default function Details() {
     setMergedImage(merged);
   };
 
-  const getField = (emp, ...keys) => {
-    for (const k of keys) if (emp && emp[k] !== undefined) return emp[k];
-    return '—';
-  };
 
   if (!employee) {
     return (
@@ -119,19 +115,19 @@ export default function Details() {
         <div className={styles['info-grid']}>
           <div className={styles['info-item']}>
             <label>Name</label>
-            <span>{getField(employee, 'name', 'Name', 'employee_name')}</span>
+            <span>{employee.name}</span>
           </div>
           <div className={styles['info-item']}>
-            <label>Email</label>
-            <span>{getField(employee, 'email', 'Email', 'employee_email')}</span>
+            <label>Position</label>
+            <span>{employee.position}</span>
           </div>
           <div className={styles['info-item']}>
             <label>Salary</label>
-            <span>₹{parseFloat(getField(employee, 'salary', 'Salary', 'employee_salary') || 0).toLocaleString('en-IN')}</span>
+            <span>₹{(employee.salary || 0).toLocaleString('en-IN')}</span>
           </div>
           <div className={styles['info-item']}>
             <label>City</label>
-            <span>{getField(employee, 'city', 'City')}</span>
+            <span>{employee.city}</span>
           </div>
         </div>
       </div>

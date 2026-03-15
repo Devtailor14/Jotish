@@ -1,5 +1,9 @@
 const API_URL = 'https://backend.jotish.in/backend_dev/gettabledata.php';
 
+/**
+ * API returns: { TABLE_DATA: { data: [ [name, position, city, id, date, salary], ... ] } }
+ * We transform each array row into a named object for easier consumption.
+ */
 export async function fetchEmployees() {
   const response = await fetch(API_URL, {
     method: 'POST',
@@ -11,9 +15,39 @@ export async function fetchEmployees() {
     throw new Error(`API Error: ${response.status}`);
   }
 
-  const data = await response.json();
-  return data;
+  const json = await response.json();
+
+  // Navigate the nested structure
+  const rawData = json?.TABLE_DATA?.data || json?.data || json;
+  const rows = Array.isArray(rawData) ? rawData : [];
+
+  // Transform array rows → objects
+  // Each row: [name, position, city, id, date, salary]
+  return rows.map((row) => {
+    if (Array.isArray(row)) {
+      return {
+        name: row[0] || '',
+        position: row[1] || '',
+        city: row[2] || '',
+        id: row[3] || '',
+        date: row[4] || '',
+        salary: parseSalary(row[5]),
+      };
+    }
+    // If already an object, return as-is
+    return row;
+  });
 }
+
+/** Parse salary strings like "$320,800" → 320800 */
+function parseSalary(val) {
+  if (typeof val === 'number') return val;
+  if (typeof val === 'string') {
+    return parseFloat(val.replace(/[$,]/g, '')) || 0;
+  }
+  return 0;
+}
+
 
 /**
  * Merge a photo (Base64) and a signature canvas into a single image Blob/Base64.
@@ -43,10 +77,20 @@ export function mergePhotoAndSignature(photoDataUrl, signatureCanvas) {
 }
 
 /**
- * City-to-coordinate mapping for India-based cities.
+ * City-to-coordinate mapping for cities found in the API data.
+ * Includes global cities (Edinburgh, London, New York, etc.) and Indian cities.
  * Used by the Leaflet map on the Analytics page.
  */
 export const CITY_COORDINATES = {
+  // API cities
+  'Edinburgh': [55.9533, -3.1883],
+  'London': [51.5074, -0.1278],
+  'New York': [40.7128, -74.0060],
+  'San Francisco': [37.7749, -122.4194],
+  'Sidney': [-33.8688, 151.2093],
+  'Sydney': [-33.8688, 151.2093],
+  'Singapore': [1.3521, 103.8198],
+  'Tokyo': [35.6762, 139.6503],
   'Mumbai': [19.0760, 72.8777],
   'Delhi': [28.7041, 77.1025],
   'Bangalore': [12.9716, 77.5946],

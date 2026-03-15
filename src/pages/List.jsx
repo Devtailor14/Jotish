@@ -25,8 +25,7 @@ export default function List() {
     setError(null);
     try {
       const data = await fetchEmployees();
-      const list = Array.isArray(data) ? data : (data.data || data.records || []);
-      setEmployees(list);
+      setEmployees(data);
     } catch (err) {
       setError(err.message);
     }
@@ -37,9 +36,9 @@ export default function List() {
     if (!search.trim()) return employees;
     const q = search.toLowerCase();
     return employees.filter(emp =>
-      (emp.name || emp.Name || '').toLowerCase().includes(q) ||
-      (emp.city || emp.City || '').toLowerCase().includes(q) ||
-      (emp.email || emp.Email || '').toLowerCase().includes(q)
+      (emp.name || '').toLowerCase().includes(q) ||
+      (emp.city || '').toLowerCase().includes(q) ||
+      (emp.position || '').toLowerCase().includes(q)
     );
   }, [employees, search]);
 
@@ -59,17 +58,12 @@ export default function List() {
     buffer: 5,
   });
 
-  const getField = (emp, ...keys) => {
-    for (const k of keys) if (emp[k] !== undefined) return emp[k];
-    return '—';
-  };
-
   const totalSalary = useMemo(() => {
-    return employees.reduce((sum, e) => sum + (parseFloat(e.salary || e.Salary || 0)), 0);
+    return employees.reduce((sum, e) => sum + (e.salary || 0), 0);
   }, [employees]);
 
   const uniqueCities = useMemo(() => {
-    const cities = new Set(employees.map(e => e.city || e.City || ''));
+    const cities = new Set(employees.map(e => e.city || ''));
     return cities.size;
   }, [employees]);
 
@@ -147,7 +141,7 @@ export default function List() {
         <div className={styles['table-header-row']}>
           <span>#</span>
           <span>Name</span>
-          <span>Email</span>
+          <span>Position</span>
           <span>Salary</span>
           <span>City</span>
           <span>Action</span>
@@ -171,18 +165,12 @@ export default function List() {
                   onClick={() => navigate(`/details/${emp._virtualIndex}`)}
                 >
                   <span className={styles['cell-id']}>{emp._virtualIndex + 1}</span>
-                  <span className={styles['cell-name']}>
-                    {getField(emp, 'name', 'Name', 'employee_name')}
-                  </span>
-                  <span className={styles['cell-email']}>
-                    {getField(emp, 'email', 'Email', 'employee_email')}
-                  </span>
+                  <span className={styles['cell-name']}>{emp.name}</span>
+                  <span className={styles['cell-email']}>{emp.position}</span>
                   <span className={styles['cell-salary']}>
-                    ₹{parseFloat(getField(emp, 'salary', 'Salary', 'employee_salary') || 0).toLocaleString('en-IN')}
+                    ₹{(emp.salary || 0).toLocaleString('en-IN')}
                   </span>
-                  <span className={styles['cell-city']}>
-                    {getField(emp, 'city', 'City')}
-                  </span>
+                  <span className={styles['cell-city']}>{emp.city}</span>
                   <span className={styles['cell-action']}>View →</span>
                 </div>
               ))}
