@@ -11,7 +11,7 @@ export default function Login() {
   const { login, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
-  // If already logged in, redirect
+
   if (isAuthenticated) {
     return <Navigate to="/list" replace />;
   }
@@ -21,7 +21,7 @@ export default function Login() {
     setError('');
     setIsLoading(true);
 
-    // Simulate network delay
+
     await new Promise(r => setTimeout(r, 600));
 
     const result = login(username, password);

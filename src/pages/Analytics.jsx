@@ -11,7 +11,7 @@ export default function Analytics() {
   const { employees, mergedImage } = useData();
   const [hoveredBar, setHoveredBar] = useState(null);
 
-  // Aggregate salary per city
+
   const cityData = useMemo(() => {
     const map = {};
     employees.forEach((emp) => {
@@ -27,7 +27,7 @@ export default function Analytics() {
       .slice(0, 15);
   }, [employees]);
 
-  // Map city data with coordinates
+
   const mapMarkers = useMemo(() => {
     return cityData
       .filter(d => {
@@ -44,7 +44,7 @@ export default function Analytics() {
       });
   }, [cityData]);
 
-  // SVG Chart dimensions
+
   const chartWidth = Math.max(600, cityData.length * 70);
   const chartHeight = 350;
   const padding = { top: 30, right: 20, bottom: 80, left: 70 };
@@ -53,7 +53,7 @@ export default function Analytics() {
   const maxSalary = Math.max(...cityData.map(d => d.total), 1);
   const barWidth = Math.min(40, plotWidth / cityData.length - 8);
 
-  // Color for bars
+
   const barColors = [
     '#6366f1', '#8b5cf6', '#a78bfa', '#c4b5fd',
     '#818cf8', '#7c3aed', '#6d28d9', '#5b21b6',

@@ -18,12 +18,12 @@ export default function Details() {
   const [hasSigned, setHasSigned] = useState(false);
   const [mergedResult, setMergedResult] = useState(null);
 
-  // Setup canvas sizing when captured image is available
+
   useEffect(() => {
     if (capturedImage && signatureCanvasRef.current) {
       const canvas = signatureCanvasRef.current;
       const parent = canvas.parentElement;
-      // Set canvas resolution to match the displayed size
+
       const rect = parent.getBoundingClientRect();
       canvas.width = rect.width;
       canvas.height = rect.height;
@@ -35,7 +35,7 @@ export default function Details() {
     }
   }, [capturedImage]);
 
-  // Cleanup camera on unmount
+
   useEffect(() => {
     return () => stopCamera();
   }, [stopCamera]);

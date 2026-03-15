@@ -38,7 +38,6 @@ export function useCamera() {
     const imageData = canvas.toDataURL('image/png');
     setCapturedImage(imageData);
 
-    // Stop camera after capture
     if (streamRef.current) {
       streamRef.current.getTracks().forEach(t => t.stop());
       streamRef.current = null;
@@ -60,7 +59,6 @@ export function useCamera() {
     setIsStreaming(false);
   }, []);
 
-  // Cleanup on unmount
   useEffect(() => {
     return () => {
       if (streamRef.current) {
